@@ -9,6 +9,8 @@ const MailLogin = () => {
   const devBypassEnabled =
     import.meta.env.DEV ||
     import.meta.env.VITE_DEV_AUTH_BYPASS === 'true' ||
+    import.meta.env.VITE_DEMO_MODE === 'true' ||
+    import.meta.env.VITE_PUBLIC_DEMO === 'true' ||
     (typeof window !== 'undefined' &&
       (window.location.hostname === 'localhost' ||
         window.location.hostname === '127.0.0.1' ||
@@ -68,28 +70,6 @@ const MailLogin = () => {
       }
     } catch {
       setError('Connection error. Please try again.');
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleDevBypass = async () => {
-    if (!devBypassEnabled) return;
-    const devEmail = devPrefillEmail || 'aditimenon1903@gmail.com';
-    const devPassword = password || devPrefillPassword || 'dev';
-    setEmail(devEmail);
-    setPassword(devPassword);
-    setError('');
-    setIsLoading(true);
-    try {
-      const success = await loginDevBypass(devEmail, devPrefillName);
-      if (success) {
-        navigate('/mail');
-      } else {
-        setError('Dev bypass failed. Check mail dev auth configuration.');
-      }
-    } catch {
-      setError('Dev bypass error. See console for details.');
     } finally {
       setIsLoading(false);
     }
@@ -247,16 +227,6 @@ const MailLogin = () => {
                   </>
                 )}
               </button>
-              {devBypassEnabled && (
-                <button
-                  type="button"
-                  disabled={isLoading}
-                  onClick={handleDevBypass}
-                  className="w-full h-9 mt-3 border border-white/15 text-[10px] font-mono uppercase tracking-[0.22em] text-white/40 hover:text-white hover:border-white/40 transition-colors"
-                >
-                  Dev auth bypass
-                </button>
-              )}
             </form>
           </motion.div>
         </div>

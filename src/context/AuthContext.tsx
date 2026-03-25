@@ -21,6 +21,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const devBypassEnabled =
     import.meta.env.DEV ||
     import.meta.env.VITE_DEV_AUTH_BYPASS === 'true' ||
+    import.meta.env.VITE_DEMO_MODE === 'true' ||
+    import.meta.env.VITE_PUBLIC_DEMO === 'true' ||
     (typeof window !== 'undefined' &&
       (window.location.hostname === 'localhost' ||
         window.location.hostname === '127.0.0.1' ||

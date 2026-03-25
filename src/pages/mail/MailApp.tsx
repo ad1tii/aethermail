@@ -130,7 +130,10 @@ type DemoMailbox = {
 };
 
 const DEV_AUTH_BYPASS_ENABLED =
-  import.meta.env.DEV || import.meta.env.VITE_DEV_AUTH_BYPASS === 'true';
+  import.meta.env.DEV ||
+  import.meta.env.VITE_DEV_AUTH_BYPASS === 'true' ||
+  import.meta.env.VITE_DEMO_MODE === 'true' ||
+  import.meta.env.VITE_PUBLIC_DEMO === 'true';
 
 const getDevAuthBypassActive = () => {
   const enabled =
