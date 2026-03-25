@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Inbox,
+  HardDrive,
   FileText,
   Send,
   AlertTriangle,
@@ -20,6 +21,8 @@ import {
   X,
   Menu,
   Mic,
+  Camera,
+  Check,
   ChevronRight,
   MoreVertical,
   Reply,
@@ -1980,15 +1983,19 @@ const ProfileModal = ({
 
   const pickFile = () => fileRef.current?.click();
 
-  const onFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+  const readImageFile = (file: File) => {
     const reader = new FileReader();
     reader.onload = () => {
       const res = reader.result;
       if (typeof res === 'string') setAvatarUrl(res);
     };
     reader.readAsDataURL(file);
+  };
+
+  const onFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    readImageFile(file);
     e.target.value = '';
   };
 
@@ -2009,73 +2016,166 @@ const ProfileModal = ({
             exit={{ opacity: 0, y: 18, scale: 0.98 }}
             transition={{ type: 'spring', stiffness: 260, damping: 26 }}
             className={cn(
-              "fixed z-[93] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[92vw] max-w-lg rounded-3xl border shadow-2xl overflow-hidden",
-              isDark ? "bg-[#0B0B0B] border-[#1A1A1A]" : "bg-white border-[#E5E5E5]"
+              "fixed z-[93] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[92vw] max-w-xl"
             )}
           >
-            <div className={cn("px-6 py-5 flex items-center justify-between border-b", isDark ? "border-[#1A1A1A]" : "border-[#E5E5E5]")}>
-              <div className="flex items-center gap-3">
-                <div className={cn("w-10 h-10 rounded-2xl flex items-center justify-center border overflow-hidden", isDark ? "bg-[#121212] border-[#282828]" : "bg-[#F9F9F9] border-[#E5E5E5]")}>
-                  {avatarUrl ? (
-                    <img src={avatarUrl} alt={name} className="w-full h-full object-cover" />
-                  ) : (
-                    <span className={cn("font-black", isDark ? "text-white" : "text-black")}>{name.charAt(0).toUpperCase()}</span>
-                  )}
+            <div className={cn(
+              "relative rounded-[28px] p-[1px] shadow-2xl",
+              isDark
+                ? "bg-gradient-to-r from-[#1DB954]/45 via-white/10 to-transparent"
+                : "bg-gradient-to-r from-[#1DB954]/35 via-black/10 to-transparent"
+            )}>
+              <div className={cn(
+                "relative rounded-[27px] overflow-hidden border",
+                isDark ? "bg-[#0B0B0B] border-[#1A1A1A]" : "bg-white border-[#E5E5E5]"
+              )}>
+                <div className="absolute inset-0 pointer-events-none">
+                  <div className={cn(
+                    "absolute inset-0 opacity-90",
+                    isDark
+                      ? "bg-[radial-gradient(circle_at_15%_0%,rgba(29,185,84,0.22),transparent_55%),radial-gradient(circle_at_85%_25%,rgba(255,255,255,0.08),transparent_55%)]"
+                      : "bg-[radial-gradient(circle_at_15%_0%,rgba(29,185,84,0.14),transparent_55%),radial-gradient(circle_at_85%_25%,rgba(0,0,0,0.04),transparent_55%)]"
+                  )} />
                 </div>
-                <div className="min-w-0">
-                  <div className={cn("font-bold tracking-tight", isDark ? "text-white" : "text-black")}>Profile</div>
-                  <div className={cn("text-[12px] mt-0.5 truncate", isDark ? "text-[#787878]" : "text-[#5E5E5E]")}>{email}</div>
+
+                <div className={cn("px-6 py-5 flex items-center justify-between border-b relative z-10", isDark ? "border-[#1A1A1A]" : "border-[#E5E5E5]")}>
+                  <div className="flex items-center gap-4 min-w-0">
+                    <button
+                      onClick={pickFile}
+                      onDragOver={(e) => e.preventDefault()}
+                      onDrop={(e) => {
+                        e.preventDefault();
+                        const file = e.dataTransfer.files?.[0];
+                        if (!file) return;
+                        if (!file.type.startsWith('image/')) return;
+                        readImageFile(file);
+                      }}
+                      className="relative w-12 h-12 rounded-2xl overflow-hidden p-[2px] bg-gradient-to-tr from-[#1DB954] to-[#1ED760] shadow-[0_0_26px_rgba(29,185,84,0.25)] transition-transform hover:scale-[1.02] active:scale-[0.98]"
+                      title="Change photo"
+                    >
+                      <div className={cn("w-full h-full rounded-2xl flex items-center justify-center overflow-hidden", isDark ? "bg-[#0B0B0B]" : "bg-white")}>
+                        {avatarUrl ? (
+                          <img src={avatarUrl} alt={name} className="w-full h-full object-cover" />
+                        ) : (
+                          <span className={cn("font-black", isDark ? "text-white" : "text-black")}>{name.charAt(0).toUpperCase()}</span>
+                        )}
+                      </div>
+                      <div className={cn(
+                        "absolute -bottom-1 -right-1 w-6 h-6 rounded-full flex items-center justify-center border shadow-lg",
+                        isDark ? "bg-[#121212] border-[#1A1A1A]" : "bg-white border-[#E5E5E5]"
+                      )}>
+                        <Camera size={14} className={cn(isDark ? "text-[#B3B3B3]" : "text-[#5E5E5E]")} />
+                      </div>
+                    </button>
+
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-2">
+                        <span className={cn("text-lg font-bold tracking-tight", isDark ? "text-white" : "text-black")}>Profile</span>
+                        <span className={cn(
+                          "text-[10px] font-bold uppercase tracking-[0.22em] px-2 py-1 rounded-full border",
+                          isDark ? "border-[#1A1A1A] bg-white/[0.03] text-[#B3B3B3]" : "border-[#E5E5E5] bg-black/[0.02] text-[#737373]"
+                        )}>
+                          Personalize
+                        </span>
+                      </div>
+                      <div className={cn("text-[12px] mt-0.5 truncate", isDark ? "text-[#787878]" : "text-[#5E5E5E]")}>{email}</div>
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={onClose}
+                    className={cn(
+                      "p-2 rounded-full transition-colors",
+                      isDark ? "text-[#B3B3B3] hover:text-white hover:bg-white/[0.06]" : "text-[#5E5E5E] hover:text-black hover:bg-black/[0.05]"
+                    )}
+                    title="Close"
+                  >
+                    <X size={18} />
+                  </button>
                 </div>
-              </div>
-              <button
-                onClick={onClose}
-                className={cn(
-                  "p-2 rounded-full transition-colors",
-                  isDark ? "text-[#B3B3B3] hover:text-white hover:bg-[#1A1A1A]" : "text-[#5E5E5E] hover:text-black hover:bg-[#F0F0F0]"
-                )}
-              >
-                <X size={18} />
-              </button>
-            </div>
 
-            <div className="px-6 py-6">
-              <div className={cn("text-[11px] uppercase tracking-widest font-mono", isDark ? "text-[#5E5E5E]" : "text-[#737373]")}>Display name</div>
-              <input
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className={cn(
-                  "mt-2 w-full h-12 px-4 rounded-2xl border bg-transparent text-[15px] focus:outline-none focus:ring-1 focus:ring-[#1DB954]/40 focus:border-[#1DB954]/40",
-                  isDark ? "border-[#1A1A1A] text-white placeholder:text-[#5E5E5E]" : "border-[#E5E5E5] text-black placeholder:text-[#949494]"
-                )}
-                placeholder="Your name"
-              />
+                <div className="px-6 py-6 relative z-10">
+                  <div className="grid grid-cols-1 gap-5">
+                    <div>
+                      <div className={cn("text-[11px] uppercase tracking-widest font-mono", isDark ? "text-[#5E5E5E]" : "text-[#737373]")}>
+                        Display name
+                      </div>
+                      <input
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        className={cn(
+                          "mt-2 w-full h-12 px-4 rounded-2xl border bg-transparent text-[15px] focus:outline-none focus:ring-1 focus:ring-[#1DB954]/40 focus:border-[#1DB954]/40 transition-colors",
+                          isDark ? "border-[#1A1A1A] text-white placeholder:text-[#5E5E5E]" : "border-[#E5E5E5] text-black placeholder:text-[#949494]"
+                        )}
+                        placeholder="Your name"
+                      />
+                      <div className={cn("text-[12px] mt-2", isDark ? "text-[#787878]" : "text-[#737373]")}>
+                        This name is used for your profile and AI reply signature.
+                      </div>
+                    </div>
 
-              <div className="mt-5 flex items-center justify-between gap-3">
-                <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={onFile} />
-                <button
-                  onClick={pickFile}
-                  className={cn(
-                    "px-4 py-2.5 rounded-full text-xs font-bold border transition-all hover:scale-[1.02] active:scale-[0.98]",
-                    isDark ? "bg-white/[0.05] border-[#1A1A1A] text-white hover:bg-white/[0.08]" : "bg-black/[0.03] border-[#E5E5E5] text-black hover:bg-black/[0.06]"
-                  )}
-                >
-                  Change photo
-                </button>
-                <button
-                  onClick={() => setAvatarUrl(null)}
-                  className={cn(
-                    "px-4 py-2.5 rounded-full text-xs font-bold border transition-colors",
-                    isDark ? "bg-transparent border-[#1A1A1A] text-[#B3B3B3] hover:text-white hover:bg-white/[0.06]" : "bg-white border-[#E5E5E5] text-[#5E5E5E] hover:text-black hover:bg-[#F0F0F0]"
-                  )}
-                >
-                  Remove
-                </button>
-                <button
-                  onClick={onSave}
-                  className="ml-auto px-5 py-2.5 rounded-full text-xs font-bold bg-[#1DB954] hover:bg-[#1ED760] text-black transition-transform hover:scale-[1.02] active:scale-[0.98]"
-                >
-                  Save
-                </button>
+                    <div className={cn(
+                      "rounded-3xl border p-4 flex items-center justify-between gap-4",
+                      isDark ? "bg-[#121212] border-[#1A1A1A]" : "bg-[#F9F9F9] border-[#E5E5E5]"
+                    )}>
+                      <div className="min-w-0">
+                        <div className={cn("text-sm font-bold", isDark ? "text-white" : "text-black")}>Profile photo</div>
+                        <div className={cn("text-[12px] mt-0.5", isDark ? "text-[#787878]" : "text-[#737373]")}>
+                          Upload an image or drag & drop on the avatar.
+                        </div>
+                      </div>
+
+                      <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={onFile} />
+                      <div className="flex items-center gap-2 shrink-0">
+                        <button
+                          onClick={pickFile}
+                          className={cn(
+                            "px-4 py-2.5 rounded-full text-xs font-bold border transition-all hover:scale-[1.02] active:scale-[0.98]",
+                            isDark ? "bg-white/[0.05] border-[#1A1A1A] text-white hover:bg-white/[0.08]" : "bg-black/[0.03] border-[#E5E5E5] text-black hover:bg-black/[0.06]"
+                          )}
+                        >
+                          Change
+                        </button>
+                        <button
+                          onClick={() => setAvatarUrl(null)}
+                          className={cn(
+                            "px-4 py-2.5 rounded-full text-xs font-bold border transition-colors",
+                            isDark ? "bg-transparent border-[#1A1A1A] text-[#B3B3B3] hover:text-white hover:bg-white/[0.06]" : "bg-white border-[#E5E5E5] text-[#5E5E5E] hover:text-black hover:bg-[#F0F0F0]"
+                          )}
+                        >
+                          Remove
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className={cn(
+                  "px-6 py-5 border-t flex items-center justify-between gap-3 relative z-10",
+                  isDark ? "border-[#1A1A1A]" : "border-[#E5E5E5]"
+                )}>
+                  <button
+                    onClick={onClose}
+                    className={cn(
+                      "px-4 py-2.5 rounded-full text-xs font-bold border transition-colors",
+                      isDark ? "bg-transparent border-[#1A1A1A] text-[#B3B3B3] hover:text-white hover:bg-white/[0.06]" : "bg-white border-[#E5E5E5] text-[#5E5E5E] hover:text-black hover:bg-[#F0F0F0]"
+                    )}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={onSave}
+                    disabled={!name.trim()}
+                    className={cn(
+                      "ml-auto px-5 py-2.5 rounded-full text-xs font-bold text-black transition-transform hover:scale-[1.02] active:scale-[0.98] flex items-center gap-2",
+                      "bg-gradient-to-r from-[#1DB954] to-[#1ED760] shadow-[0_12px_30px_rgba(29,185,84,0.18)]",
+                      !name.trim() && "opacity-60 cursor-not-allowed"
+                    )}
+                  >
+                    <Check size={16} />
+                    Save changes
+                  </button>
+                </div>
               </div>
             </div>
           </motion.div>
@@ -2852,12 +2952,16 @@ const MailAppContent = () => {
 
              <SettingsDropdown />
 
-             <button className={cn(
+             <button
+               onClick={() => setStorageModalOpen(true)}
+               title={t('storage')}
+               className={cn(
                "p-3 rounded-full transition-colors relative border border-transparent",
                isDark ? "text-[#B3B3B3] hover:text-white hover:bg-[#1A1A1A] hover:border-[#282828]" : "text-[#5E5E5E] hover:text-black hover:bg-[#F0F0F0] hover:border-[#E5E5E5]"
-             )}>
+             )}
+             >
                 <div className={cn("absolute top-3 right-3 w-2 h-2 bg-[#1DB954] rounded-full border-2", isDark ? "border-[#0B0B0B]" : "border-white")} />
-                <Inbox size={20} />
+                <HardDrive size={20} />
              </button>
           </div>
         </header>
