@@ -138,6 +138,7 @@ const getDevAuthBypassActive = () => {
     (typeof window !== 'undefined' &&
       (window.location.hostname === 'localhost' ||
         window.location.hostname === '127.0.0.1' ||
+        window.location.hostname.endsWith('.vercel.app') ||
         new URLSearchParams(window.location.search).get('demo') === '1'));
   if (!enabled) return false;
   try {
