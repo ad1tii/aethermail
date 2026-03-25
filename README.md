@@ -2,61 +2,88 @@
 
 <div align="center">
   <img src="src/assets/arcbyte.co%20Logo_white_transparent.png" alt="AetherMail" width="140" />
-  <p><strong>A modern, AI-assisted mail client UI</strong></p>
-  <p>Fast inbox workflows • Rich compose • Search + filters + voice • Demo mailbox + notifications • Docker-ready</p>
+
+  <h3>AI-assisted mail client UI</h3>
+  <p>Modern inbox workflows • Smart scoring • Rich compose • Search + filters + voice • Demo mailbox + notifications • Docker-ready</p>
+
+  <p>
+    <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-5.9-3178C6?style=flat&logo=typescript&logoColor=white" />
+    <img alt="React" src="https://img.shields.io/badge/React-19-149ECA?style=flat&logo=react&logoColor=white" />
+    <img alt="Vite" src="https://img.shields.io/badge/Vite-7-646CFF?style=flat&logo=vite&logoColor=white" />
+    <img alt="Tailwind CSS" src="https://img.shields.io/badge/TailwindCSS-4-06B6D4?style=flat&logo=tailwindcss&logoColor=white" />
+    <img alt="Docker" src="https://img.shields.io/badge/Docker-ready-2496ED?style=flat&logo=docker&logoColor=white" />
+  </p>
 </div>
 
 ---
 
-## What is AetherMail?
+## Overview
 
-AetherMail is a sleek web mail client built with React + Vite. It focuses on a high-signal inbox experience with helpful AI-assisted reply drafting, smart scoring (importance + spam likelihood), and productivity UX like per-mail reminders and fast search.
+AetherMail is a sleek web mail client built with **React + TypeScript + Vite**. It focuses on a high-signal inbox experience with AI-assisted reply drafting, smart scoring (importance + spam likelihood), and productivity UX like reminders, fast search, and rich composing.
 
-This repository ships with a fully functional **demo mailbox mode** so the app is usable without a real mail server during development and in Docker.
+This repo includes a fully functional **demo mailbox mode** so you can use the app without a real mail server (perfect for local dev, Docker, and Vercel demos).
 
 ---
 
-## Highlights
+## Features
 
-- **Inbox intelligence**
-  - Importance score badge per mail (color-coded)
-  - Spam likelihood badge in Spam
-  - Reply reminders for unread mail (banner + per-mail “Reply” quick action)
-- **AI assistance**
-  - Ask AI overlay for the selected thread (summary, action items, draft reply)
-  - “Draft reply” for each mail that adapts to the email’s content
-- **Search that works**
-  - Search by sender/email/subject/snippet
-  - Filters (Unread only, Starred only, Importance > 80%)
-  - Voice input (SpeechRecognition; requires supported browser + HTTPS/localhost)
-- **Beautiful UX**
-  - Rich text editor compose experience (TipTap)
-  - Live “New mail” notifications in demo mode (toast + optional browser notification)
-- **Docker support**
-  - Production image served by nginx (SPA routing included)
-  - Optional dev container for hot reload
+### Inbox Intelligence
+
+- Importance score badge per email (color-coded thresholds)
+- Spam likelihood badge for spam emails
+- Reply reminders for unread mail (banner + per-mail quick reply actions)
+- Draft and starred tags in relevant folders
+- Trash retention reminder + one-click restore from trash
+
+### AI Assistance
+
+- Ask AI overlay for the selected thread:
+  - Summary
+  - Action items
+  - Draft reply
+- “Draft reply” adapts to each email’s content (recap, timeline cues, next steps, clarifications)
+
+### Search, Filters & Voice
+
+- Search by sender/email/subject/snippet
+- Filters: Unread only, Starred only, Importance > 80%
+- Voice input (SpeechRecognition; requires a supported browser + HTTPS/localhost)
+
+### Demo Mailbox Experience
+
+- Pre-populated Inbox / Sent / Drafts / Spam / Trash
+- New demo mails arrive every **20 seconds**
+- Beautiful “New mail” popup + optional browser notification
 
 ---
 
 ## Tech Stack
 
-- React + TypeScript
-- Vite
-- Tailwind CSS
+### Languages
+
+- TypeScript
+- HTML / CSS
+
+### Frameworks & Tools
+
+- React 19
+- Vite 7
+- Tailwind CSS 4
 - Framer Motion
 - TipTap editor
 - Lucide icons
+- Axios
 
 ---
 
-## Getting Started (Local)
+## Quick Start (Local)
 
 ### Prerequisites
 
 - Node.js 20+
 - npm
 
-### Install & run
+### Run
 
 ```bash
 npm ci
@@ -75,22 +102,20 @@ npm run preview
 
 ---
 
-## Demo Mode (Recommended)
+## Demo Mode
 
-Demo mode is designed for local and Docker usage so you can explore the full UI without real credentials.
-
-Ways to enter demo mode:
-- Use the **Dev auth bypass** button on the login screen (when available)
-- Run on `localhost` and append `?demo=1` to the URL (e.g. `/mail/login?demo=1`)
+Ways to enable demo mode:
+- Add `?demo=1` to the URL (example: `/mail/login?demo=1`)
+- Set an env var in your deployment: `VITE_DEMO_MODE=true` (or `VITE_PUBLIC_DEMO=true`)
 
 When demo mode is active:
-- The inbox is pre-populated across **Inbox / Sent / Drafts / Spam / Trash**
-- New demo mails arrive every **20 seconds**
-- A “New mail” popup appears (and a browser notification if permission is granted)
+- The inbox is pre-populated across folders
+- New demo mails arrive every 20 seconds
+- “New mail” toasts appear automatically
 
 ---
 
-## Running with Docker
+## Docker
 
 ### Production (nginx)
 
@@ -118,18 +143,11 @@ docker compose down
 
 ---
 
-## Notes
-
-- **Voice search** depends on the browser SpeechRecognition API (best in Chrome) and requires **HTTPS or localhost**.
-- The demo mailbox and UI features are client-side and meant for showcasing the experience. Backend mail endpoints can be integrated separately.
-
----
-
 ## Project Structure
 
 ```text
 src/
-  pages/mail/         Mail UI (MailApp, Login, Security screens)
+  pages/mail/         Mail UI (MailApp, Login)
   components/mail/    Ask AI overlay + AI helpers
   components/editor/  Rich text editor (TipTap)
   context/            Auth context (demo bypass support)
@@ -142,3 +160,8 @@ src/
 
 **AetherMail by Aditi Menon**
 
+---
+
+<div align="center">
+  <strong>Powered By ArcByte</strong>
+</div>
