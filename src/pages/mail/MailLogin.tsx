@@ -130,9 +130,9 @@ const MailLogin = () => {
             </div>
 
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold leading-[0.9] tracking-tighter text-white mb-8">
-              Mail
+              AetherMail
               <br />
-              <span className="text-white/15">for Buisnesses</span>
+              <span className="text-white/15">for Enterprises</span>
             </h1>
 
             <p className="text-lg text-white/45 max-w-xl font-light leading-relaxed">
