@@ -1,12 +1,12 @@
 # ArcMail
 
 <div align="center">
-  <img src="src/assets/arcbyte.co%20Logo_white_transparent.png" alt="AetherMail" width="140" />
+  <img src="src/assets/arcbyte.co%20Logo_white_transparent.png" alt="arcmail" width="140" />
 
   <h3>Operator‑grade messaging UI • AI‑assisted replies • Demo mailbox</h3>
 
   <p>
-    <a href="https://aethermail-teal.vercel.app/"><strong>Live Demo</strong></a>
+    <a href="https://arcmail-teal.vercel.app/"><strong>Live Demo</strong></a>
     &nbsp;•&nbsp;
     <a href="#features">Features</a>
     &nbsp;•&nbsp;
@@ -32,7 +32,7 @@
 
 ## Overview
 
-AetherMail is a sleek web mail client built with **React + TypeScript + Vite**. It’s designed for fast, high-signal inbox workflows with:
+arcmail is a sleek web mail client built with **React + TypeScript + Vite**. It’s designed for fast, high-signal inbox workflows with:
 
 - Smart scoring (**importance** + **spam likelihood**)
 - AI-assisted drafting (summary, action items, reply drafts)
@@ -42,7 +42,7 @@ AetherMail is a sleek web mail client built with **React + TypeScript + Vite**. 
 
 ### Live Demo
 
-**https://aethermail-teal.vercel.app/**
+**https://arcmail-teal.vercel.app/**
 
 <div align="center">
   <img alt="Gradient line" src="https://capsule-render.vercel.app/api?type=rect&color=gradient&height=2&section=header" />
@@ -165,7 +165,7 @@ Demo mode includes:
 ### Production (nginx)
 
 ```bash
-docker compose up --build aethermail
+docker compose up --build arcmail
 ```
 
 Open:
@@ -174,7 +174,7 @@ Open:
 ### Development (hot reload)
 
 ```bash
-docker compose up --build aethermail-dev
+docker compose up --build arcmail-dev
 ```
 
 Open:
@@ -203,7 +203,7 @@ src/
 
 ## Author
 
-**AetherMail by Aditi Menon**
+**arcmail by Aditi Menon**
 
 <br/>
 
