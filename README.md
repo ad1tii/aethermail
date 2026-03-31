@@ -1,4 +1,4 @@
-# AetherMail
+# ArcMail
 
 <div align="center">
   <img src="src/assets/arcbyte.co%20Logo_white_transparent.png" alt="AetherMail" width="140" />
